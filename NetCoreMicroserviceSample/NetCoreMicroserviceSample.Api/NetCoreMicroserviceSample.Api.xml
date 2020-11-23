@@ -4,5 +4,21 @@
         <name>NetCoreMicroserviceSample.Api</name>
     </assembly>
     <members>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.Auth.Login">
+            <summary>
+            Trigger login process
+            </summary>
+        </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.Auth.Logout">
+            <summary>
+            Trigger logout process
+            </summary>
+        </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.Auth.GetProfile">
+            <summary>
+            Get user profile of currently signed in user
+            </summary>
+            <returns>User profile</returns>
+        </member>
     </members>
 </doc>

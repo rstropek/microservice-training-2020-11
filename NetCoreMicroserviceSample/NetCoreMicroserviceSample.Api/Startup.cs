@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using NetCoreMicroserviceSample.Api.Controllers;
@@ -129,6 +130,20 @@ namespace NetCoreMicroserviceSample.Api
             {
                 endpoints.MapControllers();
             });
+
+            if (env.IsDevelopment())
+            {
+                app.UseSpa(spa =>
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:8080");
+                });
+            }
+            else
+            {
+                var fp = new ManifestEmbeddedFileProvider(typeof(Startup).Assembly, "wwwroot");
+                app.UseDefaultFiles(new DefaultFilesOptions { FileProvider = fp });
+                app.UseStaticFiles(new StaticFileOptions { FileProvider = fp });
+            }
         }
     }
 }

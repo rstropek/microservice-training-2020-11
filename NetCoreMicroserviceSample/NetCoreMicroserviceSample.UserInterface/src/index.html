@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microservice Training</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="display-4">Microservices Training</h1>
+      <p class="lead">
+        User interface for microservices training. By Rainer Stropek (software architects) and Philipp Pendelin
+        (softaware).
+      </p>
+      <a class="btn btn-primary btn-lg" href="https://github.com/softawaregmbh/consulting-netcore-microservices-sample"
+        role="button">
+        Learn more on GitHub
+      </a>
+    </div>
+
+    <section>
+      <h2>Authentication</h2>
+
+      <div id="profile-loading-indicator">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div id="profile-loaded" hidden>
+        <p id="welcome" hidden>Welcome, <span id="profile"></span>!</p>
+        <a class="btn btn-primary" href="/api/auth/login" id="login">Login</a>
+        <a class="btn btn-primary" href="/api/auth/logout" id="logout">Logout</a>
+      </div>
+    </section>
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+body {
+    background-color: lightgray;
+  }
+  
+  .machine-container {
+    text-align: center;
+    position: relative;
+    width: 600px;
+  }
+  
+  .machine {
+    margin-left: auto;
+    margin-right: auto;
+    height: 400px;
+  }
+  
+  section {
+    margin-bottom: 25px;
+  }

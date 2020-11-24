@@ -9,6 +9,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.OpenApi.Models;
+using NetCoreMicroserviceSample.Api.Configuration;
 using NetCoreMicroserviceSample.Api.Controllers;
 using Serilog;
 using System;
@@ -36,6 +37,8 @@ namespace NetCoreMicroserviceSample.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IBusinessLogic, BusinessLogic>();
+
+            services.Configure<HealthConfiguration>(this.Configuration.GetSection("Health"));
 
             // Cookie configuration for HTTPS
             services.Configure<CookiePolicyOptions>(options => options.MinimumSameSitePolicy = SameSiteMode.None);

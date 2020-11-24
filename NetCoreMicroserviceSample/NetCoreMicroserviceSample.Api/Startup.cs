@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -127,6 +128,8 @@ namespace NetCoreMicroserviceSample.Api
                 var commentsFile = Path.Combine(baseDirectory, commentsFileName);
                 c.IncludeXmlComments(commentsFile);
             });
+
+            services.AddAutoMapper(typeof(AutoMapperProfile));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

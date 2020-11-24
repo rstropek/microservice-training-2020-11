@@ -26,5 +26,48 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.MachinesController.Get">
+            <summary>
+            Get a list of available machines
+            </summary>
+            <returns>Liszt of machines</returns>
+        </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.MachinesController.GetAsync(System.Guid)">
+            <summary>
+            Get a machine by id
+            </summary>
+            <param name="id">ID of the machine to get</param>
+            <returns>Machine</returns>
+        </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.MachinesController.GetImageAsync(System.Guid)">
+            <summary>
+            Get SVG image for machine with given ID
+            </summary>
+            <param name="id">ID of the machine</param>
+            <returns>Machine SVG image</returns>
+        </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.MachinesController.PostAsync(NetCoreMicroserviceSample.Api.Domain.Machine)">
+            <summary>
+            Create a machine
+            </summary>
+            <param name="machine">Machine to create</param>
+            <returns>Created machine</returns>
+        </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.MachinesController.PutAsync(System.Guid,NetCoreMicroserviceSample.Api.Domain.Machine)">
+            <summary>
+            Update machine with given id
+            </summary>
+            <param name="id">ID of the machine to update</param>
+            <param name="machine">Machine data</param>
+            <remarks>
+            ID in URL and body must match. If they don't, bad request is returned.
+            </remarks>
+        </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.MachinesController.Delete(System.Guid)">
+            <summary>
+            Delete a machine with given ID
+            </summary>
+            <param name="id">ID of the machine to delete</param>
+        </member>
     </members>
 </doc>

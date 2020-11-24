@@ -4,3 +4,8 @@
 
 GET {{host}}/api/health
 Accept: application/json
+
+###
+# @name machines
+GET {{host}}/api/machines
+Accept: application/json

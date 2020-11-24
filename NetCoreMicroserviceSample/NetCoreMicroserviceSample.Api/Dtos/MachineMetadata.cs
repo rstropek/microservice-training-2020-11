@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace NetCoreMicroserviceSample.Api.Dtos
 {
-    public record MachineMetadata(Guid id, string Name, string Description);
+    public record MachineMetadata(Guid Id, string Name, string Description);
 }

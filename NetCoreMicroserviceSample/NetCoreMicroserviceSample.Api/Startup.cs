@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -12,6 +13,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.OpenApi.Models;
 using NetCoreMicroserviceSample.Api.Configuration;
 using NetCoreMicroserviceSample.Api.Controllers;
+using NetCoreMicroserviceSample.Api.Repository;
 using Serilog;
 using System;
 using System.Diagnostics;
@@ -37,6 +39,8 @@ namespace NetCoreMicroserviceSample.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<MachineVisualizationDataContext>(options => options.UseInMemoryDatabase("machines"));
+
             services.AddSingleton<IBusinessLogic, BusinessLogic>();
 
             services.Configure<HealthConfiguration>(this.Configuration.GetSection("Health"));
@@ -132,7 +136,7 @@ namespace NetCoreMicroserviceSample.Api
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MachineVisualizationDataContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -141,6 +145,8 @@ namespace NetCoreMicroserviceSample.Api
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NetCoreMicroserviceSample.Api v1"));
+
+            dbContext.Database.EnsureCreated();
 
             app.UseSerilogRequestLogging();
 

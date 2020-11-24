@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.OpenApi.Models;
 using NetCoreMicroserviceSample.Api.Controllers;
+using Serilog;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -134,6 +135,8 @@ namespace NetCoreMicroserviceSample.Api
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NetCoreMicroserviceSample.Api v1"));
+
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
 

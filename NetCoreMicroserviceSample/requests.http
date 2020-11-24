@@ -9,3 +9,86 @@ Accept: application/json
 # @name machines
 GET {{host}}/api/machines
 Accept: application/json
+
+###
+@firstMachine={{machines.response.body.$.[0].id}}
+GET {{host}}/api/machines/{{firstMachine}}
+Accept: application/json
+
+
+###
+@firstMachine={{machines.response.body.$.[0].id}}
+GET {{host}}/api/machines/{{firstMachine}}/image
+Accept: application/json
+
+###
+POST {{host}}/api/machines
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": "{{$guid}}",
+  "name": "Foo",
+  "imageUrl": "bar.jpg",
+  "description": "Foo Bar"
+}
+
+###
+@firstMachine={{machines.response.body.$.[0].id}}
+DELETE {{host}}/api/machines/{{firstMachine}}
+
+###
+@firstMachine={{machines.response.body.$.[0].id}}
+GET {{host}}/api/machines/{{firstMachine}}/settings
+Accept: application/json
+
+###
+@firstMachine={{machines.response.body.$.[0].id}}
+GET {{host}}/api/machines/{{firstMachine}}/switches
+Accept: application/json
+
+###
+@firstMachine={{machines.response.body.$.[0].id}}
+PUT {{host}}/api/machines/{{firstMachine}}/settings
+Accept: application/json
+Content-Type: application/json
+
+[
+  {
+    "id": "{{$guid}}",
+    "name": "Setting 1",
+    "description": "Description Setting 1",
+    "value": 33.484,
+    "positionX": 10,
+    "positionY": 480
+  },
+  {
+    "id": "{{$guid}}",
+    "name": "Setting 2",
+    "description": "Description Setting 2",
+    "value": 5.8,
+    "positionX": 120,
+    "positionY": 40
+  }
+]
+
+###
+@firstMachine={{machines.response.body.$.[0].id}}
+PUT {{host}}/api/machines/{{firstMachine}}/switch
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": "{{$guid}}",
+  "value": true
+}
+
+###
+GET https://demo.identityserver.io/connect/userinfo
+Authorization: Bearer ...
+
+###
+POST https://demo.identityserver.io/connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&MachineClientId=m2m&client_secret=secret&audience=api

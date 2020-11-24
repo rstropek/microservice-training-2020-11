@@ -25,7 +25,7 @@ namespace NetCoreMicroserviceSample.Api.Controllers
             this.bl = bl ?? throw new System.ArgumentNullException(nameof(bl));
         }
 
-        [HttpGet]
+        [HttpGet(Name = "SayHello")]
         public string HelloWorld([FromQuery] int? howNice)
         {
             howNice ??= 1;

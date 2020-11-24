@@ -15,8 +15,10 @@ using NetCoreMicroserviceSample.Api.Configuration;
 using NetCoreMicroserviceSample.Api.Controllers;
 using NetCoreMicroserviceSample.Api.Repository;
 using Serilog;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -30,6 +32,21 @@ namespace NetCoreMicroserviceSample.Api
 {
     public class Startup
     {
+        [SuppressMessage("Design", "CA1812", Justification = "Instantiated by Swashbuckle")]
+        private class AdditionalParametersDocumentFilter : IDocumentFilter
+        {
+            public void Apply(OpenApiDocument openApiDoc, DocumentFilterContext context)
+            {
+                foreach (var schema in context.SchemaRepository.Schemas)
+                {
+                    if (schema.Value.AdditionalProperties == null)
+                    {
+                        schema.Value.AdditionalPropertiesAllowed = true;
+                    }
+                }
+            }
+        }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -126,6 +143,7 @@ namespace NetCoreMicroserviceSample.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NetCoreMicroserviceSample.Api", Version = "v1" });
+                c.DocumentFilter<AdditionalParametersDocumentFilter>();
 
                 var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 var commentsFileName = Assembly.GetExecutingAssembly().GetName().Name + ".xml";

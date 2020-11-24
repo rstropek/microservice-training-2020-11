@@ -19,6 +19,12 @@ namespace NetCoreMicroserviceSample.Api.Controllers
     [ApiController]
     public class MachinesController : ControllerBase
     {
+        // generate Swagger file "offline" (e.g. for the build pipeline)
+        // dotnet swagger tofile --output obj/api.json bin/Debug/net5.0/NetCoreMicroserviceSample.Api.dll v1
+
+        // generate Autorest client code for TypeScript
+        // npx autorest --input-file=../NetCoreMicroserviceSample.Api/obj/api.json --typescript --output-folder=../NetCoreMicroserviceSample.ApiClient --v3
+
         private readonly IMapper mapper;
         private readonly MachineVisualizationDataContext dbContext;
 

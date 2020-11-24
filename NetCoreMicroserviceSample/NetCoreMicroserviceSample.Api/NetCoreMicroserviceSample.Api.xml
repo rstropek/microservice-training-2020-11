@@ -20,5 +20,11 @@
             </summary>
             <returns>User profile</returns>
         </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.HealthController.Get">
+            <summary>
+            Find out wheteher the API is running
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

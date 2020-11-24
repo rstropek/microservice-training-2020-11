@@ -22,7 +22,7 @@ namespace NetCoreMicroserviceSample.Api.Controllers
 
         public HelloWorldController(IBusinessLogic bl)
         {
-            this.bl = bl;
+            this.bl = bl ?? throw new System.ArgumentNullException(nameof(bl));
         }
 
         [HttpGet]

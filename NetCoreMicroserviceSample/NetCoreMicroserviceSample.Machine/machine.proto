@@ -5,6 +5,7 @@ option csharp_namespace = "NetCoreMicroserviceSample.MachineService";
 service MachineAccess {
     rpc UpdateSettings(MachineSettingsUpdate) returns (MachineResponse);
     rpc TriggerSwitch(SwitchTrigger) returns (MachineResponse);
+    rpc GetMeasurementStream(MeasurementRequest) returns (stream MeasurementResponse);
 }
 
 message MachineSettingsUpdate {
@@ -13,11 +14,20 @@ message MachineSettingsUpdate {
     double Value = 3;
 }
 
+message SwitchTrigger {
+    string MachineId = 1;
+    string SwitchId = 2;
+}
+
 message MachineResponse {
     int32 ResultCode = 1; // For demo purposes only, will always be 1
 }
 
-message SwitchTrigger {
+message MeasurementRequest {
     string MachineId = 1;
-    string SwitchId = 2;
+}
+
+message MeasurementResponse {
+    string MachineId = 1;
+    double Value = 2;
 }

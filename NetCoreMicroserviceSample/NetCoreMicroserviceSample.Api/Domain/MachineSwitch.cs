@@ -5,18 +5,20 @@ using System.Threading.Tasks;
 
 namespace NetCoreMicroserviceSample.Api.Domain
 {
-    public class Machine
+    public class MachineSwitch
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public string Name { get; set; } = string.Empty;
+        public Guid MachineId { get; set; }
 
-        public string SvgImage { get; set; } = string.Empty;
+        public Machine Machine { get; set; } = null!;
+
+        public string Name { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
 
-        public ICollection<MachineSetting> Settings { get; } = null!;
+        public int PositionX { get; set; }
 
-        public ICollection<MachineSwitch> Switches { get; } = null!;
+        public int PositionY { get; set; }
     }
 }

@@ -55,22 +55,19 @@ Content-Type: application/json
 
 [
   {
-    "id": "{{$guid}}",
+    "id": "c0927560-36b9-403b-b9cf-d5a96d7cc075",
     "name": "Setting 1",
     "description": "Description Setting 1",
-    "value": 33.484,
+    "value": 42.42,
     "positionX": 10,
     "positionY": 480
-  },
-  {
-    "id": "{{$guid}}",
-    "name": "Setting 2",
-    "description": "Description Setting 2",
-    "value": 5.8,
-    "positionX": 120,
-    "positionY": 40
   }
 ]
+
+###
+@firstMachine={{machines.response.body.$.[0].id}}
+GET {{host}}/api/machines/{{firstMachine}}/streaming
+Accept: application/json
 
 ###
 @firstMachine={{machines.response.body.$.[0].id}}

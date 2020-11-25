@@ -21,6 +21,13 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="10.1.1" />
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+        <PackageReference Include="Google.Protobuf" Version="3.14.0" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.33.1" />
+        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.33.1" />
+        <PackageReference Include="Grpc.Tools" Version="2.34.0-pre1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" NoWarn="NU1605" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.0" NoWarn="NU1605" />
@@ -33,6 +40,14 @@
 
     <ItemGroup>
         <EmbeddedResource Include="wwwroot/*" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="NetCoreMicroserviceSample.Api.xml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Protobuf Include="..\NetCoreMicroserviceSample.Machine\machine.proto" Link="machine.proto" />
     </ItemGroup>
     
     <ItemGroup>

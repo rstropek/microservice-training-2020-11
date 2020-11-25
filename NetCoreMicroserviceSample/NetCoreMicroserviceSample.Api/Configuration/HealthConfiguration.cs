@@ -7,6 +7,6 @@ namespace NetCoreMicroserviceSample.Api.Configuration
 {
     public class HealthConfiguration
     {
-        public string HealtEndpointGreetingMessage { get; set; }
+        public string HealtEndpointGreetingMessage { get; set; } = string.Empty;
     }
 }

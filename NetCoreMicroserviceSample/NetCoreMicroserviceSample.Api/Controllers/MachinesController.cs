@@ -1,16 +1,21 @@
 ﻿using AutoMapper;
+using Grpc.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCoreMicroserviceSample.Api.Domain;
 using NetCoreMicroserviceSample.Api.Dtos;
+using NetCoreMicroserviceSample.Api.MachineConnection;
 using NetCoreMicroserviceSample.Api.Repository;
+using NetCoreMicroserviceSample.MachineService;
 using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NetCoreMicroserviceSample.Api.Controllers
@@ -27,11 +32,14 @@ namespace NetCoreMicroserviceSample.Api.Controllers
 
         private readonly IMapper mapper;
         private readonly MachineVisualizationDataContext dbContext;
+        private readonly IMachineService machineClient;
 
-        public MachinesController(IMapper mapper, MachineVisualizationDataContext dbContext)
+        public MachinesController(IMapper mapper, MachineVisualizationDataContext dbContext,
+            IMachineService machineClient)
         {
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            this.machineClient = machineClient;
         }
 
         /// <summary>
@@ -165,6 +173,86 @@ namespace NetCoreMicroserviceSample.Api.Controllers
             await dbContext.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        public record MachineSettingsUpdateDto(Guid Id, double Value);
+
+        /// <summary>
+        /// Write settings to DB and to machine
+        /// </summary>
+        /// <param name="id">ID of machine</param>
+        /// <param name="settings">Settings to write</param>
+        [HttpPut("{id}/settings", Name = "UpdateMachineSettings")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> PutSettingsAsync(Guid id, [FromBody] MachineSettingsUpdateDto[] settings)
+        {
+            var existingSettings = await dbContext.MachineSettings.Where(s => s.MachineId == id).ToListAsync();
+            if (existingSettings.Count == 0)
+            {
+                return NotFound();
+            }
+
+            foreach(var settingToWrite in settings)
+            {
+                var settingToUpdateInDb = existingSettings.Single(s => s.Id == settingToWrite.Id);
+                settingToUpdateInDb.Value = settingToWrite.Value;
+
+                await machineClient.UpdateSettingsAsync(new MachineSettingsUpdate
+                {
+                    MachineId = id.ToString(),
+                    SettingId = settingToWrite.Id.ToString(),
+                    Value = settingToWrite.Value
+                });
+            }
+
+            await dbContext.SaveChangesAsync();
+            return Ok();
+        }
+
+        /// <summary>
+        /// Trigger switch (sent to machine)
+        /// </summary>
+        /// <param name="id">ID of machine</param>
+        /// <param name="switchId">ID of switch</param>
+        [HttpPost("{id}/switches/{switchId}", Name = "SetMachineSwitch")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> PostSwitchAsync(Guid id, Guid switchId)
+        {
+            await machineClient.TriggerSwitchAsync(new()
+            {
+                MachineId = id.ToString(),
+                SwitchId = switchId.ToString()
+            });
+
+            return Ok();
+        }
+
+        [HttpGet("{id}/streaming", Name = "StreamMeasurements")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Stream(Guid id)
+        {
+            using var stream = await machineClient.GetMeasurementStream(new()
+            {
+                MachineId = id.ToString()
+            }, CancellationToken.None);
+
+            try
+            {
+                var counter = 0;
+                await foreach (var m in stream.ResponseStream.ReadAllAsync(CancellationToken.None))
+                {
+                    Console.WriteLine(m.Value);
+                    if (++counter == 25) break;
+                }
+            }
+            finally
+            {
+                Console.WriteLine("Cleaning up");
+            }
+
+            return Ok();
         }
     }
 }

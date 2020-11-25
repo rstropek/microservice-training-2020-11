@@ -13,7 +13,9 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.OpenApi.Models;
 using NetCoreMicroserviceSample.Api.Configuration;
 using NetCoreMicroserviceSample.Api.Controllers;
+using NetCoreMicroserviceSample.Api.MachineConnection;
 using NetCoreMicroserviceSample.Api.Repository;
+using NetCoreMicroserviceSample.MachineService;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
@@ -67,6 +69,11 @@ namespace NetCoreMicroserviceSample.Api
 
             // Add HTTP client used to get tokens from identity server
             services.AddHttpClient("identity-server", c => c.BaseAddress = new Uri(Configuration["Oidc:Domain"]));
+
+            services.AddGrpcClient<MachineAccess.MachineAccessClient>(o =>
+                o.Address = new Uri(Configuration["MachineGrpcService"]));
+
+            services.AddTransient<IMachineService, MachineConnection.MachineService>();
 
             // Add authentication services see https://identityserver4.readthedocs.io
             services.AddAuthentication(options =>

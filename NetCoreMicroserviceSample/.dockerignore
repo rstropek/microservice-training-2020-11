@@ -1,0 +1,9 @@
+**/.config
+**/bin
+**/obj
+**/.dockerignore
+**/.gitignore
+**/Dockerfile
+**/*.user
+**/.vs
+NetCoreMicroserviceSample.UserInterface

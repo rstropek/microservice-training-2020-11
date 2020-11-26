@@ -28,3 +28,13 @@ export const id: msRest.OperationURLParameter = {
     }
   }
 };
+export const switchId: msRest.OperationURLParameter = {
+  parameterPath: "switchId",
+  mapper: {
+    required: true,
+    serializedName: "switchId",
+    type: {
+      name: "Uuid"
+    }
+  }
+};

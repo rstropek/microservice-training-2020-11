@@ -175,6 +175,46 @@ namespace NetCoreMicroserviceSample.Api.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Get settings for a given machine
+        /// </summary>
+        /// <param name="id">Machine ID</param>
+        [HttpGet("{id}/settings", Name = "GetMachineSettings")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(IEnumerable<MachineSetting>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetSettingsAsync(Guid id)
+        {
+            var settings = await dbContext.MachineSettings.Where(s => s.MachineId == id).ToListAsync();
+
+            if (!settings.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(settings);
+        }
+
+        /// <summary>
+        /// Get switches for a given machine
+        /// </summary>
+        /// <param name="id">Machine ID</param>
+        [HttpGet("{id}/switches", Name = "GetMachineSwitches")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(MachineSwitch[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetSwitchesAsync(Guid id)
+        {
+            var switches = await dbContext.MachineSwitches.Where(s => s.MachineId == id).ToListAsync();
+
+            if (switches.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(switches);
+        }
+
         public record MachineSettingsUpdateDto(Guid Id, double Value);
 
         /// <summary>

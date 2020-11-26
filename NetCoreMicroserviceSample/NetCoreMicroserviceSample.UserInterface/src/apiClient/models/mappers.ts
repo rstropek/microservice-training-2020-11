@@ -34,6 +34,200 @@ export const MachineMetadata: msRest.CompositeMapper = {
   }
 };
 
+export const MachineSwitch: msRest.CompositeMapper = {
+  serializedName: "MachineSwitch",
+  type: {
+    name: "Composite",
+    className: "MachineSwitch",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "Uuid"
+        }
+      },
+      machineId: {
+        serializedName: "machineId",
+        type: {
+          name: "Uuid"
+        }
+      },
+      machine: {
+        serializedName: "machine",
+        type: {
+          name: "Composite",
+          className: "Machine"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
+      },
+      positionX: {
+        serializedName: "positionX",
+        type: {
+          name: "Number"
+        }
+      },
+      positionY: {
+        serializedName: "positionY",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const Machine: msRest.CompositeMapper = {
+  serializedName: "Machine",
+  type: {
+    name: "Composite",
+    className: "Machine",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "Uuid"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      svgImage: {
+        serializedName: "svgImage",
+        type: {
+          name: "String"
+        }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
+      },
+      settings: {
+        readOnly: true,
+        serializedName: "settings",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "MachineSetting"
+            }
+          }
+        }
+      },
+      switches: {
+        readOnly: true,
+        serializedName: "switches",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "MachineSwitch"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const MachineSetting: msRest.CompositeMapper = {
+  serializedName: "MachineSetting",
+  type: {
+    name: "Composite",
+    className: "MachineSetting",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "Uuid"
+        }
+      },
+      machineId: {
+        serializedName: "machineId",
+        type: {
+          name: "Uuid"
+        }
+      },
+      machine: {
+        serializedName: "machine",
+        type: {
+          name: "Composite",
+          className: "Machine"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
+      },
+      value: {
+        serializedName: "value",
+        type: {
+          name: "Number"
+        }
+      },
+      positionX: {
+        serializedName: "positionX",
+        type: {
+          name: "Number"
+        }
+      },
+      positionY: {
+        serializedName: "positionY",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const MachineSettingsUpdateDto: msRest.CompositeMapper = {
+  serializedName: "MachineSettingsUpdateDto",
+  type: {
+    name: "Composite",
+    className: "MachineSettingsUpdateDto",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "Uuid"
+        }
+      },
+      value: {
+        serializedName: "value",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
 export const ProblemDetails: msRest.CompositeMapper = {
   serializedName: "ProblemDetails",
   type: {
@@ -100,40 +294,6 @@ export const UserProfile: msRest.CompositeMapper = {
       },
       subject: {
         serializedName: "subject",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const Machine: msRest.CompositeMapper = {
-  serializedName: "Machine",
-  type: {
-    name: "Composite",
-    className: "Machine",
-    modelProperties: {
-      id: {
-        serializedName: "id",
-        type: {
-          name: "Uuid"
-        }
-      },
-      name: {
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      svgImage: {
-        serializedName: "svgImage",
-        type: {
-          name: "String"
-        }
-      },
-      description: {
-        serializedName: "description",
         type: {
           name: "String"
         }

@@ -36,6 +36,56 @@
       </div>
     </section>
 
+    <section>
+      <h2>Machine</h2>
+
+      <div id="loading-indicator">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+
+      <div id="loaded-content" hidden>
+        <form>
+          <h3>Filter</h3>
+
+          <div class="form-group">
+            <label for="machines-dropdown">Please select a machine</label>
+            <select class="custom-select" id="machines-dropdown"></select>
+          </div>
+
+          <h3>Machine Data</h3>
+          <div class="form-group">
+            <label for="machine-description">Machine Description</label>
+            <input type="text" class="form-control" id="machine-description" readonly>
+          </div>
+
+          <div class="form-group">
+            <label for="machine-sensor-value">Current Sensor Value</label>
+            <input type="text" class="form-control" id="machine-sensor-value" readonly>
+          </div>
+
+          <div id="settings" hidden>
+            <h3>Settings</h3>
+            <div class="form-group">
+              <label for="setting-name">Setting Name</label>
+              <input type="text" class="form-control" id="setting-name" readonly>
+            </div>
+            <div class="form-group">
+              <label for="setting-value">Setting Value</label>
+              <input type="number" class="form-control" id="setting-value" placeholder="Enter setting value">
+            </div>
+
+            <button id="settings-update-btn" class="btn btn-primary" type="button">Update</button>
+          </div>
+        </form>
+
+        <div id="machine-container" class="machine-container mt-4">
+          <div id="machine-image-container"></div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </body>
 

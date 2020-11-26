@@ -69,6 +69,18 @@
             </summary>
             <param name="id">ID of the machine to delete</param>
         </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.MachinesController.GetSettingsAsync(System.Guid)">
+            <summary>
+            Get settings for a given machine
+            </summary>
+            <param name="id">Machine ID</param>
+        </member>
+        <member name="M:NetCoreMicroserviceSample.Api.Controllers.MachinesController.GetSwitchesAsync(System.Guid)">
+            <summary>
+            Get switches for a given machine
+            </summary>
+            <param name="id">Machine ID</param>
+        </member>
         <member name="M:NetCoreMicroserviceSample.Api.Controllers.MachinesController.PutSettingsAsync(System.Guid,NetCoreMicroserviceSample.Api.Controllers.MachinesController.MachineSettingsUpdateDto[])">
             <summary>
             Write settings to DB and to machine

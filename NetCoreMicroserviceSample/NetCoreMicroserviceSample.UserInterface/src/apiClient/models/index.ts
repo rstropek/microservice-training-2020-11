@@ -16,6 +16,59 @@ export interface MachineMetadata {
 }
 
 /**
+ * An interface representing MachineSwitch.
+ */
+export interface MachineSwitch {
+  id?: string;
+  machineId?: string;
+  machine?: Machine;
+  name?: string;
+  description?: string;
+  positionX?: number;
+  positionY?: number;
+}
+
+/**
+ * An interface representing Machine.
+ */
+export interface Machine {
+  id?: string;
+  name?: string;
+  svgImage?: string;
+  description?: string;
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly settings?: MachineSetting[];
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly switches?: MachineSwitch[];
+}
+
+/**
+ * An interface representing MachineSetting.
+ */
+export interface MachineSetting {
+  id?: string;
+  machineId?: string;
+  machine?: Machine;
+  name?: string;
+  description?: string;
+  value?: number;
+  positionX?: number;
+  positionY?: number;
+}
+
+/**
+ * An interface representing MachineSettingsUpdateDto.
+ */
+export interface MachineSettingsUpdateDto {
+  id?: string;
+  value?: number;
+}
+
+/**
  * An interface representing ProblemDetails.
  */
 export interface ProblemDetails {
@@ -37,16 +90,6 @@ export interface UserProfile {
   name?: string;
   email?: string;
   subject?: string;
-}
-
-/**
- * An interface representing Machine.
- */
-export interface Machine {
-  id?: string;
-  name?: string;
-  svgImage?: string;
-  description?: string;
 }
 
 /**
@@ -81,6 +124,16 @@ export interface NetCoreMicroserviceSampleApiUpdateMachineOptionalParams extends
    * Machine data
    */
   body?: Machine;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface NetCoreMicroserviceSampleApiUpdateMachineSettingsOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Settings to write
+   */
+  body?: MachineSettingsUpdateDto[];
 }
 
 /**
@@ -292,6 +345,96 @@ export type DeleteMachineResponse = ProblemDetails & {
  * Contains response data for the getMachineImage operation.
  */
 export type GetMachineImageResponse = ProblemDetails & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ProblemDetails;
+    };
+};
+
+/**
+ * Contains response data for the getMachineSettings operation.
+ */
+export type GetMachineSettingsResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: any;
+    };
+};
+
+/**
+ * Contains response data for the updateMachineSettings operation.
+ */
+export type UpdateMachineSettingsResponse = ProblemDetails & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ProblemDetails;
+    };
+};
+
+/**
+ * Contains response data for the getMachineSwitches operation.
+ */
+export type GetMachineSwitchesResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: any;
+    };
+};
+
+/**
+ * Contains response data for the setMachineSwitch operation.
+ */
+export type SetMachineSwitchResponse = ProblemDetails & {
   /**
    * The underlying HTTP response.
    */

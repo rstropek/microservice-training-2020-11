@@ -298,6 +298,149 @@ class NetCoreMicroserviceSampleApi extends NetCoreMicroserviceSampleApiContext {
       getMachineImageOperationSpec,
       callback) as Promise<Models.GetMachineImageResponse>;
   }
+
+  /**
+   * @summary Get settings for a given machine
+   * @param id Machine ID
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetMachineSettingsResponse>
+   */
+  getMachineSettings(id: string, options?: msRest.RequestOptionsBase): Promise<Models.GetMachineSettingsResponse>;
+  /**
+   * @param id Machine ID
+   * @param callback The callback
+   */
+  getMachineSettings(id: string, callback: msRest.ServiceCallback<any>): void;
+  /**
+   * @param id Machine ID
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getMachineSettings(id: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<any>): void;
+  getMachineSettings(id: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<any>, callback?: msRest.ServiceCallback<any>): Promise<Models.GetMachineSettingsResponse> {
+    return this.sendOperationRequest(
+      {
+        id,
+        options
+      },
+      getMachineSettingsOperationSpec,
+      callback) as Promise<Models.GetMachineSettingsResponse>;
+  }
+
+  /**
+   * @summary Write settings to DB and to machine
+   * @param id ID of machine
+   * @param [options] The optional parameters
+   * @returns Promise<Models.UpdateMachineSettingsResponse>
+   */
+  updateMachineSettings(id: string, options?: Models.NetCoreMicroserviceSampleApiUpdateMachineSettingsOptionalParams): Promise<Models.UpdateMachineSettingsResponse>;
+  /**
+   * @param id ID of machine
+   * @param callback The callback
+   */
+  updateMachineSettings(id: string, callback: msRest.ServiceCallback<Models.ProblemDetails>): void;
+  /**
+   * @param id ID of machine
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  updateMachineSettings(id: string, options: Models.NetCoreMicroserviceSampleApiUpdateMachineSettingsOptionalParams, callback: msRest.ServiceCallback<Models.ProblemDetails>): void;
+  updateMachineSettings(id: string, options?: Models.NetCoreMicroserviceSampleApiUpdateMachineSettingsOptionalParams | msRest.ServiceCallback<Models.ProblemDetails>, callback?: msRest.ServiceCallback<Models.ProblemDetails>): Promise<Models.UpdateMachineSettingsResponse> {
+    return this.sendOperationRequest(
+      {
+        id,
+        options
+      },
+      updateMachineSettingsOperationSpec,
+      callback) as Promise<Models.UpdateMachineSettingsResponse>;
+  }
+
+  /**
+   * @summary Get switches for a given machine
+   * @param id Machine ID
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetMachineSwitchesResponse>
+   */
+  getMachineSwitches(id: string, options?: msRest.RequestOptionsBase): Promise<Models.GetMachineSwitchesResponse>;
+  /**
+   * @param id Machine ID
+   * @param callback The callback
+   */
+  getMachineSwitches(id: string, callback: msRest.ServiceCallback<any>): void;
+  /**
+   * @param id Machine ID
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getMachineSwitches(id: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<any>): void;
+  getMachineSwitches(id: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<any>, callback?: msRest.ServiceCallback<any>): Promise<Models.GetMachineSwitchesResponse> {
+    return this.sendOperationRequest(
+      {
+        id,
+        options
+      },
+      getMachineSwitchesOperationSpec,
+      callback) as Promise<Models.GetMachineSwitchesResponse>;
+  }
+
+  /**
+   * @summary Trigger switch (sent to machine)
+   * @param id ID of machine
+   * @param switchId ID of switch
+   * @param [options] The optional parameters
+   * @returns Promise<Models.SetMachineSwitchResponse>
+   */
+  setMachineSwitch(id: string, switchId: string, options?: msRest.RequestOptionsBase): Promise<Models.SetMachineSwitchResponse>;
+  /**
+   * @param id ID of machine
+   * @param switchId ID of switch
+   * @param callback The callback
+   */
+  setMachineSwitch(id: string, switchId: string, callback: msRest.ServiceCallback<Models.ProblemDetails>): void;
+  /**
+   * @param id ID of machine
+   * @param switchId ID of switch
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  setMachineSwitch(id: string, switchId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ProblemDetails>): void;
+  setMachineSwitch(id: string, switchId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ProblemDetails>, callback?: msRest.ServiceCallback<Models.ProblemDetails>): Promise<Models.SetMachineSwitchResponse> {
+    return this.sendOperationRequest(
+      {
+        id,
+        switchId,
+        options
+      },
+      setMachineSwitchOperationSpec,
+      callback) as Promise<Models.SetMachineSwitchResponse>;
+  }
+
+  /**
+   * @param id
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  streamMeasurements(id: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param id
+   * @param callback The callback
+   */
+  streamMeasurements(id: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param id
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  streamMeasurements(id: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  streamMeasurements(id: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        id,
+        options
+      },
+      streamMeasurementsOperationSpec,
+      callback);
+  }
 }
 
 // Operation Specifications
@@ -492,6 +635,128 @@ const getMachineImageOperationSpec: msRest.OperationSpec = {
     404: {
       bodyMapper: Mappers.ProblemDetails
     },
+    default: {}
+  },
+  serializer
+};
+
+const getMachineSettingsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "api/Machines/{id}/settings",
+  urlParameters: [
+    Parameters.id
+  ],
+  responses: {
+    200: {
+      bodyMapper: {
+        serializedName: "parsedResponse",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "MachineSetting"
+            }
+          }
+        }
+      }
+    },
+    404: {
+      bodyMapper: Mappers.ProblemDetails
+    },
+    default: {}
+  },
+  serializer
+};
+
+const updateMachineSettingsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "api/Machines/{id}/settings",
+  urlParameters: [
+    Parameters.id
+  ],
+  requestBody: {
+    parameterPath: [
+      "options",
+      "body"
+    ],
+    mapper: {
+      serializedName: "body",
+      type: {
+        name: "Sequence",
+        element: {
+          type: {
+            name: "Composite",
+            className: "MachineSettingsUpdateDto"
+          }
+        }
+      }
+    }
+  },
+  responses: {
+    200: {},
+    404: {
+      bodyMapper: Mappers.ProblemDetails
+    },
+    default: {}
+  },
+  serializer
+};
+
+const getMachineSwitchesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "api/Machines/{id}/switches",
+  urlParameters: [
+    Parameters.id
+  ],
+  responses: {
+    200: {
+      bodyMapper: {
+        serializedName: "parsedResponse",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "MachineSwitch"
+            }
+          }
+        }
+      }
+    },
+    404: {
+      bodyMapper: Mappers.ProblemDetails
+    },
+    default: {}
+  },
+  serializer
+};
+
+const setMachineSwitchOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "api/Machines/{id}/switches/{switchId}",
+  urlParameters: [
+    Parameters.id,
+    Parameters.switchId
+  ],
+  responses: {
+    200: {},
+    404: {
+      bodyMapper: Mappers.ProblemDetails
+    },
+    default: {}
+  },
+  serializer
+};
+
+const streamMeasurementsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "api/Machines/{id}/streaming",
+  urlParameters: [
+    Parameters.id
+  ],
+  responses: {
+    200: {},
     default: {}
   },
   serializer

@@ -15,6 +15,13 @@ interface IProfile {
 // Global event listener to start interacting with the DOM/page once it's loaded
 document.addEventListener('DOMContentLoaded', async () => {
     try {
+        // integrate SignalR
+        const hubConnection = new HubConnectionBuilder()
+            .withUrl("/livedata")
+            .build();
+
+        await hubConnection.start();
+
         // use a view model to get an abstraction of the DOM interaction model
         var viewModel = new MachineConfigurationViewModel();
 
@@ -28,6 +35,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             viewModel.settings = <MachineSetting[]><unknown>await client.getMachineSettings(m.id);
             viewModel.switches = <MachineSwitch[]><unknown>await client.getMachineSwitches(m.id);
+
+            hubConnection.stream("MachineData", m.id)
+                .subscribe({
+                    next: (value) => {
+                        viewModel.sensorValue = value;
+                    },
+                    complete: () => {
+                        console.log("complete");
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    }
+                });
         }
 
         // react on the save settings button in the view model -> update settings on server via an API call
@@ -51,6 +71,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             await client.setMachineSwitch(s.machineId, s.id);
         }
+
+        const serverResponse = await hubConnection.invoke("hello", "Hello from our machine UI ;)");
+        console.log(serverResponse);
 
         // Call Profile Endpoint
         const response = await fetch("/api/auth/profile");

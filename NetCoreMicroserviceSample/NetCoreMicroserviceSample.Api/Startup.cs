@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.OpenApi.Models;
 using NetCoreMicroserviceSample.Api.Configuration;
 using NetCoreMicroserviceSample.Api.Controllers;
+using NetCoreMicroserviceSample.Api.Hubs;
 using NetCoreMicroserviceSample.Api.MachineConnection;
 using NetCoreMicroserviceSample.Api.Repository;
 using NetCoreMicroserviceSample.MachineService;
@@ -159,6 +160,8 @@ namespace NetCoreMicroserviceSample.Api
             });
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
+
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MachineVisualizationDataContext dbContext)
@@ -185,6 +188,7 @@ namespace NetCoreMicroserviceSample.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MachineDataHub>("/livedata");
             });
 
             if (env.IsDevelopment())
